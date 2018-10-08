@@ -67,9 +67,19 @@ function createVis(){
 
     y_axis = d3.axisLeft()
               .scale(yScale);
+
     svg.append("g")
            .attr("transform", "translate(25, 0)")
-           .call(y_axis);
+           .call(y_axis)
+           .append("text")
+           .attr("transform", "rotate(-90)")
+           .attr("y", 10)
+           .attr("dy", "-2.5em")
+           .attr("text-anchor", "end")
+           .attr("stroke", "black")
+           .text("Frequency");
+
+
 
     xScale = d3.scaleBand()
        .domain(map)
@@ -81,7 +91,13 @@ function createVis(){
 
     svg.append('g')
         .attr('transform', `translate(25, ${height})`)
-        .call(x_axis);
+        .call(x_axis)
+        .append("text")
+        .attr("y", height - 250)
+        .attr("x", width - 100)
+        .attr("text-anchor", "end")
+        .attr("stroke", "black")
+        .text("Age");
 
     svg.selectAll("#barChart")
        .data(map)
