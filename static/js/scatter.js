@@ -1,6 +1,3 @@
-/*
-
-
 d3.json("/load_data", function (data) {
 
   data = data['users'];
@@ -78,4 +75,3 @@ d3.json("/load_data", function (data) {
 
 });
 
-*/

@@ -1,5 +1,3 @@
-/*
-
 d3.json("/load_data", function (data) {
 
   data = data['users'];
@@ -12,6 +10,9 @@ d3.json("/load_data", function (data) {
 
     // use prog_langs_data to store nested data
 
+  prog_langs_data = d3.nest()
+    .key(function(d) { return d.prog_lang; })
+    .entries(data);
 
   var svg = d3.select("#donutChart").attr('class', 'pie');
 
@@ -30,9 +31,6 @@ d3.json("/load_data", function (data) {
 
   var radius = Math.min(width, height) / 2;
 
-  var color;
-
-
     // Part 2
     // ------ YOUR CODE GOES HERE -------- 
 
@@ -41,7 +39,10 @@ d3.json("/load_data", function (data) {
     // c. define domain()
     // d. define range()
 
-
+  lang_keys = prog_langs_data.map(function(d,i){ return d.key; })
+  var color = d3.scaleOrdinal()
+    .domain(lang_keys)
+    .range(['#1b7688','#1b7676','#f9d057','#f29e2e','#9b0a0a', '#d7191c']);
 
   var arc = d3.arc()
   .innerRadius(radius - thickness)
@@ -115,6 +116,3 @@ d3.json("/load_data", function (data) {
     .text(text);
 
 });
-
-
-*/
