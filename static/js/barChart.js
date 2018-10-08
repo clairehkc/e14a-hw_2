@@ -16,7 +16,6 @@ d3.json("/load_data", function (error, json_data) {
 });
 
 function createVis(){
-   console.log("map", map);
     // visualize the total number of users
     // use txt variable defined above
     totalUsers = map.length.toString();
@@ -71,9 +70,6 @@ function createVis(){
     svg.append("g")
            .attr("transform", "translate(25, 0)")
            .call(y_axis);
-
-    // svg.append('g')
-    //     .call(d3.axisLeft(yScale));
 
     xScale = d3.scaleBand()
        .domain(map)
