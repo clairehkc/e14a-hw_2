@@ -1,5 +1,3 @@
-/*
-
 var data, txt, svg, x, y, bins, bar;
 var formatCount = d3.format(",.0f");
 
@@ -18,12 +16,11 @@ d3.json("/load_data", function (error, json_data) {
 });
 
 function createVis(){
-   
+   console.log("map", map);
     // visualize the total number of users
     // use txt variable defined above
-   
-    txt = d3.select("#total_users_text")
-      .append("text");
+    totalUsers = map.length.toString();
+    txt = d3.select("#total_users_text").html("Total Number of Users: " + totalUsers);
 
     // Part 1  
 
@@ -62,8 +59,43 @@ function createVis(){
     // e. Call Axes
 
     // f. Create Axes label
+    width = svg.attr("width") - 25; // -25 for space for labels
+    height = svg.attr("height") - 25;
+
+    yScale = d3.scaleLinear()
+       .domain([totalUsers, 0])
+       .range([0, height]);
+
+    y_axis = d3.axisLeft()
+              .scale(yScale);
+    svg.append("g")
+           .attr("transform", "translate(25, 0)")
+           .call(y_axis);
+
+    // svg.append('g')
+    //     .call(d3.axisLeft(yScale));
+
+    xScale = d3.scaleBand()
+       .domain(map)
+       .range([0, width])
+       .padding(0.2);
+
+    x_axis = d3.axisBottom()
+            .scale(xScale);
+
+    svg.append('g')
+        .attr('transform', `translate(25, ${height})`)
+        .call(x_axis);
+
+    svg.selectAll("#barChart")
+       .data(map)
+       .enter()
+       .append("rect")
+       .attr("x", function(d){return xScale(d)})
+       .attr("y", function(d){return yScale(map[d])})
+       .attr("width", xScale.bandwidth())
+       .attr("height", function(d){return height - yScale(map[d])})
+       .attr('transform', `translate(25, 0)`)
+       .style("fill", "steelblue");
 
 }
-
-
-*/

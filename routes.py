@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 from models import db, User
 from forms import UsersForm
 
@@ -11,11 +11,22 @@ app.secret_key = "e14a-key"
 
 @app.route("/")
 def index():
-	return render_template("index.html")
+	users = User.query.all()
+	return render_template("index.html", title='Home', users=users)
 
 @app.route("/index", methods=['GET'])
 def indexRedirect():
 	return index()
+
+@app.route('/load_data', methods=['GET'])
+def load_data():
+	users_json = {'users': []}
+	users = User.query.all()
+	for user in users:
+		user_info = user.__dict__
+		del user_info['_sa_instance_state']
+		users_json['users'].append(user_info)
+	return jsonify(users_json)
 
 @app.route('/add-user', methods=['GET', 'POST'])
 def add_user():
@@ -33,8 +44,6 @@ def add_user():
 			age = request.form['age']
 			hw1_hrs = request.form['hw1_hrs']
 			new_user = User(username=username, first_name=first_name, last_name=last_name, prog_lang=prog_lang, experience_yr=experience_yr, age=age, hw1_hrs=hw1_hrs)
-			print("**---------**")
-			print(new_user.username)
 			db.session.add(new_user)
 			db.session.commit()
 			return redirect(url_for('index'))
