@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for, Heroku
+from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask_heroku import Heroku
 from models import db, User
 from forms import UsersForm
 
