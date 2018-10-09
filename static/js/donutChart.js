@@ -39,7 +39,6 @@ d3.json("/load_data", function (data) {
     // b. create ordinal scale
     // c. define domain()
     // d. define range()
-  console.log("prog_langs_data", prog_langs_data)
   lang_keys = prog_langs_data.map(function(d,i){ return d.key; })
   var color = d3.scaleOrdinal()
     .domain(lang_keys)
